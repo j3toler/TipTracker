@@ -1,0 +1,51 @@
+# -*- coding: utf-8
+"""
+Spyder Editor
+
+This is a temporary script file.
+"""
+
+def isValidString(option):
+    """
+       takes as input option <string>
+       
+       checks option for being under 20 characters in length, and
+       all characters are valid english characters or a space           
+       
+       returns true or false
+    """
+    max_len = 20
+    valid_chars = 'abcdefghijklmnopqrstuvwxyz '
+    opt = option.lower()
+    for char in opt:
+        if char not in valid_chars:
+            print "Invalid format"     #debugging use only
+            return False
+    return True
+
+
+
+def getNameInfo():
+    """
+       MISSING DISCRIPTION
+    """        
+    #name = raw_input("Enter Name: " )
+    name = "Dennis"     #debugging use only
+    if not isValidString(name):
+       name = raw_input("Enter Valid Name: " )
+       if not isValidString(name):
+           exit(0)
+
+#    title = raw_input("Enter your Title: ")
+    title = "Server"    #debugging use only
+
+
+
+    print "pass getNameInfo"
+    
+    
+def main():
+    getNameInfo()
+    print "Finished"
+    
+main()
