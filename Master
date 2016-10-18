@@ -15,7 +15,7 @@ def isValidString(option):
        returns true or false
     """
     max_len = 20
-    if len(option) >= max_len:
+    if len(option) >= max_len or len(option) == 0:
         print "Invalid format"        #Debugging use only
         return False
     valid_chars = 'abcdefghijklmnopqrstuvwxyz '
@@ -35,26 +35,38 @@ def isValidTipFactor(tip_factor):
        
        returns True or False
     """
-    if tip_factor <= 0:
-        print "number less"
-    if tip_factor >= 100:
+    if tip_factor <= 0 or tip_factor >= 100:
         print "Invalid Range"        #Debugging use only
         return False
     return True
+
+def isValidYN(answer):
+    """
+       MISSING DESCRIPTION
+    """
+    if len(answer) != 1 or type(answer) != str:
+        print "Invalid Format"           #Debugging use only
+        return None
+    ans = answer.lower()
+    if ans == 'y':
+        return True
+    if ans == 'n':
+        return False
+
 
 def getNameInfo():
     """
        MISSING DISCRIPTION
     """        
-    name = raw_input("Enter Name: ")
-#    name = "Dennis"     #debugging use only
+#    name = raw_input("Enter Name: ")
+    name = "Dennis"     #debugging use only
     if not isValidString(name):
        name = raw_input("Enter Valid Name: ")
        if not isValidString(name):
            exit(0)
 
-    title = raw_input("Enter your Title: ")
-#    title = "Server"    #debugging use only
+#    title = raw_input("Enter your Title: ")
+    title = "Server"    #debugging use only
     if not isValidString(title):
         title = raw_input("Enter Valid Title: ")
         if not isValidString(title):
@@ -68,7 +80,65 @@ def getShiftInfo():
     """
        MISSING DESCRIPTION
     """
-    pass
+    shift_info = {}
+    
+    def isValidHours(hours):
+        """
+           Takes as input hours <float>
+           
+           checks if hours provided are between 0 and 24
+           
+           returns True or False
+        """
+        if hours <= 0.0 or hours >= 24.0:
+            return False
+        return True
+    
+    shift_Name = raw_input("What shift are you working: ")
+    if not isValidString(shift_Name):
+        shift_Name = raw_input("Enter Valid Shift Name: ")
+        if not isValidString(shift_Name):
+            print "Invalid Format"           #Debuggin use only
+            exit(0)
+
+    shift_Hours = raw_input("How many hours did you work: ")
+
+    try:
+        shift_Hours = float(shift_Hours)
+        shift_Hours_PASS = True
+    except:
+        print "Invalid Format"           #Debugging use only
+        shift_Hours_PASS = False
+    if not isValidHours(shift_Hours) or not shift_Hours_PASS:
+        shift_Hours = raw_input("Enter a valid number between 0 and 24: ")
+        try:
+            shift_Hours = float(shift_Hours)
+        except:
+            print "Invalid Format"                  #Debugging use only
+            exit(0)
+        if not isValidHours(shift_Hours):
+            print "Invalid Format"                  #Debugging use only
+            exit(0)
+
+    shift_Section = raw_input("Which section did you work: ")
+    if not isValidString(shift_Section):
+        print "Invalid Format"        #Debuggin use only
+        shift_Section = raw_input("Enter Valid Section Name: ")
+        if not isValidString(shift_Section):
+            print "Invalid Format"        #Debuggin use only
+            exit(0)
+    
+    tip_Others = raw_input("Do you need to tip out anyone (y,n): ")
+    tip_Others = tip_Others[0]
+        
+    if isValidYN(tip_Others) == None:
+        tip_Others = raw_input("Enter \'y\' or \'n\': ")
+    if isValidYN(tip_Others) == None:
+        exit(0)
+    if isValidYN(tip_Others):
+        tip_Others = True
+    else:
+        tip_Others = False
 
 def getSalesInfo():
     """
@@ -101,14 +171,14 @@ def getTipInfo():
             tip_factor = int(tip_factor)
             tip_factor_PASS = True
         except:
-            print "Invalid Format"
+            print "Invalid Format"                  #Debugging use only
             tip_factor_PASS = False
         if not isValidTipFactor(tip_factor) or not tip_factor_PASS:
             tip_factor = raw_input("Enter a valid number between 0 and 100: ")
             try:
                 tip_factor = int(tip_factor)
             except:
-                print "Invalid Format"
+                print "Invalid Format"                  #Debugging use only
                 exit(0)
             if not isValidTipFactor(tip_factor):
                 exit(0)
@@ -125,25 +195,36 @@ def getTipInfo():
                return True or False
             """
             option = option.lower()
-            valid_options = ['food', 'drink', 'total']
+            valid_options = ['food', 'alcohol', 'total']
             
             if option not in valid_options:
                 print "Invalid Option\n"          #Debugging use only
                 return False
             return True
     
-        
         tip_part = raw_input("What do they get tipped out on: ")
         if not isValidOption(tip_part):
-            tip_part = raw_input("Valid Options are\n\t1. Food\n\t2. Drink\n\t3. Total\nEnter A Valid Option: ")
+            tip_part = raw_input("Valid Options are\n\t1. Food\n\t2. Alcohol\n\t3. Total\nEnter A Valid Option: ")
+
+        tip_out[tip_person] = (tip_factor, tip_part)
+                
+        finished = raw_input("Are you finished (y,n): ")
+
+        if isValidYN(finished) == None:
+            finished = raw_input("Enter \'y\' or \'n\': ")
+        if isValidYN(finished) == None:
+            exit(0)
+        if isValidYN(finished):
+            return tip_out
         
-        print "finished"
-        exit(0)
     
 def main():
-    name, title = getNameInfo()
+#    name, title = getNameInfo()
 #    print 'name:', name, '\ntitle:', title        #Debugging use only
-    getTipInfo()
+#    getShiftInfo()
+#    getSalesInfo()
+    TipInfo = getTipInfo()
+    print TipInfo
     
     
     print "Finished"        #Debugging use only
