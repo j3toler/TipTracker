@@ -26,7 +26,21 @@ def isValidString(option):
             return False
     return True
 
-
+def isValidTipFactor(tip_factor):
+    """
+       takes as input tip_factor <int>
+       
+       assumes the input is already an int, 
+       but checks valid range between 0 and 100       
+       
+       returns True or False
+    """
+    if tip_factor <= 0:
+        print "number less"
+    if tip_factor >= 100:
+        print "Invalid Range"        #Debugging use only
+        return False
+    return True
 
 def getNameInfo():
     """
@@ -50,22 +64,18 @@ def getNameInfo():
     
     return (name, title)    
 
-def isValidTipFactor(tip_factor):
+def getShiftInfo():
     """
-       takes as input tip_factor <int>
-       
-       assumes the input is already an int, 
-       but checks valid range between 0 and 100       
-       
-       returns True or False
+       MISSING DESCRIPTION
     """
-    if tip_factor <= 0:
-        print "number less"
-    if tip_factor >= 100:
-        print "Invalid Range"        #Debugging use only
-        return False
-    return True
+    pass
 
+def getSalesInfo():
+    """
+       MISSING DESCRIPTION
+    """
+    pass
+    
 def getTipInfo():
     """
        MISSING DESCRIPTION
@@ -129,7 +139,6 @@ def getTipInfo():
         
         print "finished"
         exit(0)
-        
     
 def main():
     name, title = getNameInfo()
