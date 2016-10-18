@@ -16,7 +16,7 @@ def isValidString(option):
     """
     max_len = 20
     if len(option) >= max_len:
-        print "Invalid format"
+        print "Invalid format"        #Debugging use only
         return False
     valid_chars = 'abcdefghijklmnopqrstuvwxyz '
     opt = option.lower()
@@ -32,26 +32,111 @@ def getNameInfo():
     """
        MISSING DISCRIPTION
     """        
-    #name = raw_input("Enter Name: ")
-    name = "Dennis"     #debugging use only
+    name = raw_input("Enter Name: ")
+#    name = "Dennis"     #debugging use only
     if not isValidString(name):
        name = raw_input("Enter Valid Name: ")
        if not isValidString(name):
            exit(0)
 
-#    title = raw_input("Enter your Title: ")
-    title = "Server"    #debugging use only
+    title = raw_input("Enter your Title: ")
+#    title = "Server"    #debugging use only
     if not isValidString(title):
         title = raw_input("Enter Valid Title: ")
         if not isValidString(title):
             exit(0)
 
-    print "pass getNameInfo"
+#    print "pass getNameInfo"        #Debugging use only
     
     return (name, title)    
+
+def isValidTipFactor(tip_factor):
+    """
+       takes as input tip_factor <int>
+       
+       assumes the input is already an int, 
+       but checks valid range between 0 and 100       
+       
+       returns True or False
+    """
+    if tip_factor <= 0:
+        print "number less"
+    if tip_factor >= 100:
+        print "Invalid Range"        #Debugging use only
+        return False
+    return True
+
+def getTipInfo():
+    """
+       MISSING DESCRIPTION
+    """
+    tip_out = {}
+    while True:
+
+        ## Below validates who is being tipped out ##
+
+        tip_person = raw_input("Who do you have to tip out: ")
+#        tip_person = "Busser"
+        if not isValidString(tip_person):
+            tip_person = raw_input("Enter a Valid Name: ")
+            if not isValidString(tip_person):
+                exit(0)
+
+        ## Below validates the tip factor        
+        
+        tip_factor = raw_input("How much percentage of sales do you have to tip them: ")
+#        tip_factor = 25
+
+        try:
+            tip_factor = int(tip_factor)
+            tip_factor_PASS = True
+        except:
+            print "Invalid Format"
+            tip_factor_PASS = False
+        if not isValidTipFactor(tip_factor) or not tip_factor_PASS:
+            tip_factor = raw_input("Enter a valid number between 0 and 100: ")
+            try:
+                tip_factor = int(tip_factor)
+            except:
+                print "Invalid Format"
+                exit(0)
+            if not isValidTipFactor(tip_factor):
+                exit(0)
+        
+        ## Below validates what part of the total sales the person gets tipped out on        
+
+        def isValidOption(option):
+            """
+               takes as input option <string>
+               
+               assumes option is already lowercase, checks if the option
+               is in the list of valid options
+               
+               return True or False
+            """
+            option = option.lower()
+            valid_options = ['food', 'drink', 'total']
+            
+            if option not in valid_options:
+                print "Invalid Option\n"          #Debugging use only
+                return False
+            return True
+    
+        
+        tip_part = raw_input("What do they get tipped out on: ")
+        if not isValidOption(tip_part):
+            tip_part = raw_input("Valid Options are\n\t1. Food\n\t2. Drink\n\t3. Total\nEnter A Valid Option: ")
+        
+        print "finished"
+        exit(0)
+        
     
 def main():
-    getNameInfo()
-    print "Finished"
+    name, title = getNameInfo()
+#    print 'name:', name, '\ntitle:', title        #Debugging use only
+    getTipInfo()
+    
+    
+    print "Finished"        #Debugging use only
     
 main()
