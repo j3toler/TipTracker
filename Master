@@ -32,17 +32,19 @@ def getNameInfo():
     """
        MISSING DISCRIPTION
     """        
-    #name = raw_input("Enter Name: " )
+    #name = raw_input("Enter Name: ")
     name = "Dennis"     #debugging use only
     if not isValidString(name):
-       name = raw_input("Enter Valid Name: " )
+       name = raw_input("Enter Valid Name: ")
        if not isValidString(name):
            exit(0)
 
 #    title = raw_input("Enter your Title: ")
     title = "Server"    #debugging use only
-
-
+    if not isValidString(title):
+        title = raw_input("Enter Valid Title: ")
+        if not isValidString(title):
+            exit(0)
 
     print "pass getNameInfo"
     
