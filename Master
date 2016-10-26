@@ -53,20 +53,49 @@ def isValidYN(answer):
     if ans == 'n':
         return False
 
+def isValidHours(hours):
+    """
+       Takes as input hours <float>
+       
+       checks if hours provided are between 0 and 24
+       
+       returns True or False
+    """
+    if hours <= 0.0 or hours >= 24.0:
+        return False
+    return True
+
+def isValidSales(number, max_limit=5000):
+    """
+       MISSING DESCRIPTION
+    """
+    number = str(number)
+    if len(number) > 7 or len(number) == 0:
+        print 'Invalid Format'
+        return False
+    if '.' in number:
+        dollar, cents = number.split('.')
+    if int(dollar) > max_limit or int(dollar) < 0:
+        print 'Invalid Format'
+        return False
+    if int(cents) > 99 or int(cents) < 0:
+        print 'Invalid Format'
+        return False
+    return True
 
 def getNameInfo():
     """
        MISSING DISCRIPTION
     """        
-#    name = raw_input("Enter Name: ")
-    name = "Dennis"     #debugging use only
+    name = raw_input("Enter Name: ")
+#    name = "Dennis"     #debugging use only
     if not isValidString(name):
        name = raw_input("Enter Valid Name: ")
        if not isValidString(name):
            exit(0)
 
-#    title = raw_input("Enter your Title: ")
-    title = "Server"    #debugging use only
+    title = raw_input("Enter your Title: ")
+#    title = "Server"    #debugging use only
     if not isValidString(title):
         title = raw_input("Enter Valid Title: ")
         if not isValidString(title):
@@ -80,29 +109,18 @@ def getShiftInfo():
     """
        MISSING DESCRIPTION
     """
-    shift_info = {}
-    
-    def isValidHours(hours):
-        """
-           Takes as input hours <float>
-           
-           checks if hours provided are between 0 and 24
-           
-           returns True or False
-        """
-        if hours <= 0.0 or hours >= 24.0:
-            return False
-        return True
+    shift_Info = {}
     
     shift_Name = raw_input("What shift are you working: ")
+#    shift_Name = "Dinner"                        #Debugging use only
     if not isValidString(shift_Name):
         shift_Name = raw_input("Enter Valid Shift Name: ")
         if not isValidString(shift_Name):
             print "Invalid Format"           #Debuggin use only
             exit(0)
-
+            
     shift_Hours = raw_input("How many hours did you work: ")
-
+#    shift_Hours = 4.5                        #Debugging use only
     try:
         shift_Hours = float(shift_Hours)
         shift_Hours_PASS = True
@@ -121,6 +139,7 @@ def getShiftInfo():
             exit(0)
 
     shift_Section = raw_input("Which section did you work: ")
+#    shift_Section = "None"                        #Debugging use only
     if not isValidString(shift_Section):
         print "Invalid Format"        #Debuggin use only
         shift_Section = raw_input("Enter Valid Section Name: ")
@@ -129,6 +148,7 @@ def getShiftInfo():
             exit(0)
     
     tip_Others = raw_input("Do you need to tip out anyone (y,n): ")
+#    tip_Others = 'n'                        #Debugging use only
     tip_Others = tip_Others[0]
         
     if isValidYN(tip_Others) == None:
@@ -139,12 +159,92 @@ def getShiftInfo():
         tip_Others = True
     else:
         tip_Others = False
+    
+    shift_Info[shift_Name] = [shift_Hours, shift_Section, tip_Others]
+    return shift_Info
 
 def getSalesInfo():
     """
        MISSING DESCRIPTION
     """
-    pass
+    final_Sales = []
+    total_Sales = raw_input("What were your total sales this shift: ")
+    try:
+        if total_Sales[0] == '$':
+            total_Sales = total_Sales[1:]
+        total_Sales = float(total_Sales)
+        total_Sales_PASS = True
+    except:
+        print 'Invalid Format'                  #Debugging use only
+        total_Sales_PASS = False
+    if not isValidSales(total_Sales) or not total_Sales_PASS:
+        total_Sales = raw_input("Please enter a valid number between $0.00 and $5000.00: ")
+        try:
+            if total_Sales[0] == '$':
+                total_Sales = total_Sales[1:]
+            total_Sales = float(total_Sales)
+        except:
+            print 'Exiting...'              #Debugging use only
+            exit(0)
+        if not isValidSales(total_Sales):
+            print 'Exiting...'              #Debugging use only
+            exit(0)
+    
+            
+    food_Sales = raw_input("What were your food sales this shift: ")
+    try:
+        if food_Sales[0] == '$':
+            food_Sales = food_Sales[1:]
+        food_Sales = float(food_Sales)
+        food_Sales_PASS = True
+    except:
+        print 'Invalid Format'                  #Debugging use only
+        food_Sales_PASS = False
+    if not isValidSales(food_Sales) or not food_Sales_PASS:
+        food_Sales = raw_input("Please enter a valid number between $0.00 and $5000.00: ")
+        try:
+            if food_Sales[0] == '$':
+                food_Sales = food_Sales[1:]
+            food_Sales = float(food_Sales)
+        except:
+            print 'Exiting...'              #Debugging use only
+            exit(0)
+        if not isValidSales(food_Sales):
+            print 'Exiting...'              #Debugging use only
+            exit(0)
+        
+    alcohol_Sales = raw_input("What were your alcohol sales this shift: ")
+    try:
+        if alcohol_Sales[0] == '$':
+            alcohol_Sales = alcohol_Sales[1:]
+        alcohol_Sales = float(alcohol_Sales)
+        alcohol_Sales_PASS = True
+    except:
+        print 'Invalid Format'                  #Debugging use only
+        alcohol_Sales_PASS = False
+    if not isValidSales(alcohol_Sales) or not alcohol_Sales_PASS:
+        alcohol_Sales = raw_input("Please enter a valid number between $0.00 and $5000.00: ")
+        try:
+            if alcohol_Sales[0] == '$':
+                alcohol_Sales = alcohol_Sales[1:]
+            alcohol_Sales = float(alcohol_Sales)
+        except:
+            print 'Exiting...'              #Debugging use only
+            exit(0)
+        if not isValidSales(alcohol_Sales):
+            print 'Exiting...'              #Debugging use only
+            exit(0)
+    
+    if food_Sales + alcohol_Sales != total_Sales:
+        ## This could be different if the entire thing was encompassed in a while True loop
+        ## This spot would raise a end_loop flag that would catch at the end of the loop and either
+        ## Continue looping or exit...
+        print 'Invalid Total Sales'              #Debugging use only
+        print 'Exiting...'                       #Debugging use only
+        exit(0)
+    
+    final_Sales = [total_Sales, food_Sales, alcohol_Sales]
+    return final_Sales
     
 def getTipInfo():
     """
@@ -162,27 +262,6 @@ def getTipInfo():
             if not isValidString(tip_person):
                 exit(0)
 
-        ## Below validates the tip factor        
-        
-        tip_factor = raw_input("How much percentage of sales do you have to tip them: ")
-#        tip_factor = 25
-
-        try:
-            tip_factor = int(tip_factor)
-            tip_factor_PASS = True
-        except:
-            print "Invalid Format"                  #Debugging use only
-            tip_factor_PASS = False
-        if not isValidTipFactor(tip_factor) or not tip_factor_PASS:
-            tip_factor = raw_input("Enter a valid number between 0 and 100: ")
-            try:
-                tip_factor = int(tip_factor)
-            except:
-                print "Invalid Format"                  #Debugging use only
-                exit(0)
-            if not isValidTipFactor(tip_factor):
-                exit(0)
-        
         ## Below validates what part of the total sales the person gets tipped out on        
 
         def isValidOption(option):
@@ -203,30 +282,81 @@ def getTipInfo():
             return True
     
         tip_part = raw_input("What do they get tipped out on: ")
+#        tip_part = 'total'                                 #Debugging use only
         if not isValidOption(tip_part):
             tip_part = raw_input("Valid Options are\n\t1. Food\n\t2. Alcohol\n\t3. Total\nEnter A Valid Option: ")
+        
+        ## Below validates the tip factor        
+        
+        tip_factor = raw_input("How much percentage of sales do you have to tip them: ")
+#        tip_factor = 25                                #Debugging use only
 
-        tip_out[tip_person] = (tip_factor, tip_part)
+        try:
+            tip_factor = int(tip_factor)
+            tip_factor_PASS = True
+        except:
+            print "Invalid Format"                  #Debugging use only
+            tip_factor_PASS = False
+        if not isValidTipFactor(tip_factor) or not tip_factor_PASS:
+            tip_factor = raw_input("Enter a valid number between 0 and 100: ")
+            try:
+                tip_factor = int(tip_factor)
+            except:
+                print "Invalid Format"                  #Debugging use only
+                exit(0)
+            if not isValidTipFactor(tip_factor):
+                exit(0)
+
+
+        tip_out[tip_person] = [tip_factor, tip_part]
                 
         finished = raw_input("Are you finished (y,n): ")
+#        finished = 'y'                                       #Debugging use only
 
         if isValidYN(finished) == None:
             finished = raw_input("Enter \'y\' or \'n\': ")
         if isValidYN(finished) == None:
             exit(0)
         if isValidYN(finished):
+            print 'tip out:', tip_out
             return tip_out
         
     
 def main():
-#    name, title = getNameInfo()
-#    print 'name:', name, '\ntitle:', title        #Debugging use only
-#    getShiftInfo()
-#    getSalesInfo()
-    TipInfo = getTipInfo()
-    print TipInfo
+    name, title = getNameInfo()
+    print '=============================\nget name pass\n============================='
+
+    shift_info = getShiftInfo()
+    print '=============================\nget shift pass\n============================='
+
+    sales_info = getSalesInfo()
+    print '=============================\nget sales pass\n============================='
+
+    if shift_info[shift_info.keys()[0]][2] == True:
+        tip_info = getTipInfo()
+        print '=============================\nget tip pass\n============================='
+    else:
+        print '=============================\nno get tip needed\n============================='
+        
+    print 'Name:', name, '\nTitle:', title
+    for shift in shift_info.keys():
+        print 'Shift:', shift
+        print 'Hours:', shift_info[shift][0]
+        print 'Section:', shift_info[shift][1]
+        print 'Tip Others:', shift_info[shift][2]
     
+    print 'Total:', sales_info[0]
+    print 'Food:', sales_info[1]
+    print 'Alcohol:', sales_info[2]
+
+    try:
+        for tipper in tip_info.keys():
+            print 'Tipper:', tipper
+            print 'Percentage:', tip_info[tipper][0]
+            print 'Item:', tip_info[tipper][1]
+    except:
+        print 'NO TIP INFO COLLECTED'
     
-    print "Finished"        #Debugging use only
+    print "\n\nFinished"        #Debugging use only
     
 main()
